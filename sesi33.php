@@ -19,19 +19,22 @@
 	?>
 
 	<!-- Nomor 2 -->
+
 	<?php 
-		echo "<br>";
+		echo"<br>";
 
-		//membuat array yang berisi nama buah-buahan
-		$buah = array('apel', 'nanas', 'mangga', 'jeruk');
+		$array = array("apel", "nanas", "mangga", "jeruk");
 
-		//count() untuk menghitung isi array.
-		for ($x=0; $x<count($buah) ; $x++) { 
-		echo $buah[$x] . "<br>";
-	}
+		// Menggunakan loop foreach untuk menghitung jumlah elemen
+		$count = 0;
+		foreach ($array as $buah) {
+		    $count++;
+		}
 
-
+		echo "Terdapat " . $count . " buah";
+		echo"<br>";
 	 ?>
+
 	<!-- Nomor 3 -->
 
 	<?php
