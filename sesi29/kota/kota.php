@@ -13,7 +13,7 @@
 	body {
 	    margin: 0;
 	    font-family: 'Arial', sans-serif;
-	    background-color: #FFFFF0;
+	    background-color: #E6E6FA;
 	}
 
 	.navbar {
@@ -73,8 +73,7 @@
         <div class="collapse navbar-collapse" id="navbar-nav">
           <ul class="navbar-nav ms-auto p-3 me-4" >
             <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/index.php">
-              	<font color="red">PRODUK</font></a>
+              <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/index.php">PRODUK</a>
             </li>
             <li class="nav-item ">
               <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/kategori/kategori.php">KATEGORI</a>
@@ -83,7 +82,9 @@
               <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/kustomer/kustomer.php">KUSTOMER</a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/kota/kota.php">KOTA</a>
+              <a class="nav-link active" aria-current="page" href="http://localhost/tugas_php/sesi29/kota/kota.php">
+                <font color="red">KOTA</font></a>
+              </a>
             </li>
           </ul>
         </div>
@@ -91,44 +92,36 @@
   </nav>
 
   <!-- TABLE -->
-  <h3>DATA PRODUK</h3>
+  <h3>DATA KOTA</h3>
   <div style="padding-left: 130px;">
-      <a href="tambah_produk.php" class="btn btn-success" > 
-      + Tambah Data Produk</a>
+      <a href="tambah_kota.php" class="btn btn-success" > 
+      + Tambah Data Kota</a>
   </div>
 	<table border="1" cellpadding="0" cellspacing="0">
 		<tr>
 			<th><b>No</b></th>
-			<th><b>ID Produk</b></th>
-			<th><b>ID Kategori</b></th>
-			<th><b>Nama Produk</b></th>
-			<th><b>Harga</b></th>
-			<th><b>Stok</b></th>
-			<th><b>Tanggal Masuk</b></th>
+			<th><b>ID Kota</b></th>
+			<th><b>Nama Kota</b></th>
+			<th><b>Ongkos Kirim</b></th>
       <th><b>Aksi</b></th>
 		</tr>
             <?php
             include "connection.php";
 
-            $produk = mysqli_query($connection, "SELECT * FROM produk");
+            $kota = mysqli_query($connection, "SELECT * FROM kota");
 
             $no = 1;
-            foreach ($produk as $key => $produk_data) {
+            foreach ($kota as $key => $kota_data) {
             ?>
                 <tr>
                     <td><?php echo $no ?></td>
-                    <td><?php echo $produk_data["id_produk"] ?></td>
-                    <td><?php echo $produk_data["id_kategori"] ?></td>
-                    <td><?php echo $produk_data["nama_produk"] ?></td>
-                    <td><?php echo "Rp " . number_format($produk_data["harga"]) ?>
-                    <td><?php echo number_format($produk_data["stok"]) ?></td>
-                    <td><?php echo date("d F Y", strtotime($produk_data["tgl_masuk"])) ?></td>
+                    <td><?php echo $kota_data["id_kota"] ?></td>
+                    <td><?php echo $kota_data["nama_kota"] ?></td>
+                    <td><?php echo "Rp " . number_format($kota_data["ongkos_kirim"]) ?>
                     <td>
-                      <a href="edit_produk.php?id_produk=<?php echo $produk_data['id_produk'];?>" class="btn btn-warning">
-                      Edit</a>
-                      <a href="delete_produk.php?id_produk=<?php echo $produk_data['id_produk'];?>" class="btn btn-danger"
-                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini?');">
-                      Delete</a>
+                      <a href="edit_kota.php?id_kota=<?php echo $kota_data['id_kota'];?>" class="btn btn-warning">Edit</a>
+                      <a href="delete_kota.php?id_kota=<?php echo $kota_data['id_kota'];?>" class="btn btn-danger" 
+                        onclick="return confirm('Apakah anda yakin ingin menghapus data ini?');">Delete</a>
                     </td>
                 </tr>
             <?php $no++;
