@@ -13,7 +13,7 @@
             <form id="form_tambah" action="proses_tambah_kategori.php" method="post">
                 <div class="form-group mb-3">
                     <div class="form-label">Jenis Kategori</div>
-                    <input type="text" name="jenis_kategori" data-name="Nama Kota" class="required form-control" autocomplete="off" maxlength="50">
+                    <input type="text" name="jenis_kategori" data-name="Jenis Kategori" class="required form-control" autocomplete="off" maxlength="50">
                 </div>
                 <div class="form-group mb-3">
                     <label>Ukuran</label>
