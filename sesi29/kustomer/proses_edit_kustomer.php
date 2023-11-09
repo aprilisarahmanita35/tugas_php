@@ -10,15 +10,23 @@
 
 	include "connection.php";
 
-	mysqli_query($connection, "UPDATE `kustomer` 
-        SET `nama_kustomer` = '$nama_kustomer',
-        `password_kustomer` = '$password_kustomer', 
-        `alamat` = '$alamat', 
-        `email` = '$email',
-        `telpon` = '$telpon',
-        `id_kota` = '$id_kota' 
-        WHERE `id_kustomer` = '$id_kustomer' ");
+	// Menggunakan parameterized query untuk mencegah SQL Injection
+    $kustomer = "UPDATE kustomer SET nama_kustomer = ?, password_kustomer = ?, alamat = ?, email = ?, telpon = ?, id_kota = ? WHERE id_kustomer = ?";
+    $stmt = mysqli_prepare($connection, $kustomer);
 
-	header("Location:kustomer.php");
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'sssssii', $nama_kustomer, $password_kustomer, $alamat, $email, $telpon, $id_kota, $id_kustomer);
+        if (mysqli_stmt_execute($stmt)) {
+            header("Location:kustomer.php");
+        } else {
+            echo "Gagal menambahkan produk: " . mysqli_error($connection);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "Error in prepared statement: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
 
 ?>
+

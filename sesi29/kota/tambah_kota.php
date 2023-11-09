@@ -1,80 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <title>Tambah Data Kota</title>
-    <style>
-        body {
-            background-color: #98FB98;
-            padding: 20px;
-        }
-
-        h3 {
-            margin-top: 30px;
-        }
-
-        table {
-            border-collapse: collapse;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
-        .form-check-label {
-            padding-left: 15px;
-        }
-
-        .container {
-            background-color: #E6E6FA;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 20px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mx-auto">
-                <h3 class="mt-3 text-center">Tambah Data Kota</h3>
-                <form action="proses_tambah_kota.php" method="post">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                Nama Kota
-                            </td>
-                            <td>
-                                <input type="text" name="nama_kota" class="form-control" required="" autocomplete="off" maxlength="50">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Ongkos Kirim
-                            </td>
-                            <td>
-                                <input type="number" name="ongkos_kirim" class="form-control" required="" autocomplete="off" maxlength="8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div>
-                                    <input type="submit" name="Submit" value="Submit" class="btn btn-success">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+        <div class="m-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <h1 class="text-center">Tambah Data Kota</h1>
+            <form id="form_tambah" action="proses_tambah_kota.php" method="post">
+                <div class="form-group mb-3">
+                    <div class="form-label">Nama Kota</div>
+                    <input type="text" name="nama_kota" data-name="Nama Kota" class="required form-control" autocomplete="off" maxlength="50">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">Ongkos Kirim</div>
+                    <input type="number" name="ongkos_kirim" data-name="Ongkos Kirim" class="required form-control" autocomplete="off" maxlength="8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<?php echo $ongkos_kirim?>">
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                <a href="kota.php" class="btn btn-danger btn-sm"><i class="bi bi-chevron-left"></i>Kembali</a>
+                    <input type="submit" name="Submit" value="Submit" class="btn btn-success btn-sm">
+                </div>
+            </form>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('#form_tambah').submit(function(e) {
+                    e.preventDefault(); // Mencegah pengiriman form
+                    
+                    // Menghapus pesan error yang mungkin ada
+                    $('.error').remove();
+
+                    // Cek setiap input dengan class "required"
+                    $('.required').each(function() {
+                        if ($(this).val() === '') {
+                            // Mendapatkan nama kolom dari atribut data-name
+                            var columnName = $(this).data('name');
+
+                            // Jika input kosong, tambahkan pesan error dan beri warna merah di kolomnya
+                            $(this).after('<div class=" form-text error text-danger" style="font-size: 12px;">' + columnName + ' tidak boleh kosong</div>');
+                            $(this).css('border-color', 'red');
+                        }
+                    });
+
+                    // Jika tidak ada input yang kosong, submit form
+                    if ($('.error').length === 0) {
+                        $(this).unbind('submit').submit();
+                    }
+                });
+
+                // Menghapus pesan error dan warna merah saat input diubah
+                $('.required').keyup(function() {
+                    $(this).next('.error').remove();
+                    $(this).css('border-color', '');
+                });
+            });
+        </script>
 </body>
 </html>

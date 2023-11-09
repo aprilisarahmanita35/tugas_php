@@ -8,10 +8,23 @@
 
 	include "connection.php";
 
-	mysqli_query($connection, 
-		"INSERT INTO `produk` (`id_kategori`, `nama_produk`, `harga`, `stok`, `tgl_masuk`) 
-		VALUES ('$id_kategori', '$nama_produk', '$harga', '$stok', '$tgl_masuk');");
+	// Menggunakan parameterized query untuk mencegah SQL Injection
+	$produk = "INSERT INTO `produk` (`id_kategori`, `nama_produk`, `harga`, `stok`, `tgl_masuk`) VALUES (?, ?, ?, ?, ?)";
+	$stmt = mysqli_prepare($connection, $produk);
 
-	header("Location:index.php");
+	if ($stmt) {
+	    mysqli_stmt_bind_param($stmt, 'ssssi', $id_kategori, $nama_produk, $harga, $stok, $tgl_masuk);
+	    if (mysqli_stmt_execute($stmt)) {
+	        header("Location:index.php");
+	    } else {
+	        echo "Gagal menambahkan produk: " . mysqli_error($connection);
+	    }
+	    mysqli_stmt_close($stmt);
+	} else {
+	    echo "Error in prepared statement: " . mysqli_error($connection);
+	}
+
+	mysqli_close($connection);
 
 ?>
+

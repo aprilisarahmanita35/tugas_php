@@ -1,50 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <title>Edit Data Kustomer</title>
-    <style>
-        body {
-            background-color: #98FB98;
-            padding: 20px;
-        }
-
-        h3 {
-            margin-top: 30px;
-        }
-
-        table {
-            border-collapse: collapse;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
-        .form-check-label {
-            padding-left: 15px;
-        }
-
-        .container {
-            background-color: #E0FFFF;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 20px;
-        }
-    </style>
 </head>
 
 <?php 
     
     include "connection.php";
 
-    $id_kustomer =$_GET['id_kustomer'];
+    $id_kustomer = $_GET['id_kustomer'];
 
     $kustomer = mysqli_query($connection, "SELECT * FROM kustomer WHERE id_kustomer = '$id_kustomer' ");
     $kota = mysqli_query($connection, "SELECT * FROM kota");
@@ -63,79 +30,80 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6 mx-auto">
-                <h3 class="mt-3 text-center">Edit Data Kustomer</h3>
-                <form action="proses_edit_kustomer.php?id_kustomer=<?php echo $id_kustomer ?>" method="post">
-                    <table class="table">
-                        <tr>
-                            <td>
-                                Nama Kustomer
-                            </td>
-                            <td>
-                                <input type="text" name="nama_kustomer" class="form-control" required="" autocomplete="off"maxlength="50" value="<?php echo $nama_kustomer ?>">
-                            </td>
-                        </tr>
-                            <td>
-                                Password
-                            </td>
-                            <td>
-                                <input type="text" name="password_kustomer" class="form-control" required="" autocomplete="off" maxlength="12" value="<?php echo $password_kustomer ?>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Alamat
-                            </td>
-                            <td>
-                                <textarea name="alamat" class="form-control" rows="5" required="" autocomplete="off">
-                                <?php echo $alamat ?></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Email
-                            </td>
-                            <td>
-                                <input type="text" name="email" class="form-control" required="" autocomplete="off" 
-                                maxlength="50" value="<?php echo $email ?>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Telpon
-                            </td>
-                            <td>
-                                <input type="number" name="telpon" class="form-control" required="" autocomplete="off" maxlength="13" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<?php echo $telpon ?>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                ID Kota
-                            </td>
-                            <td>
-                                <select name="id_kota" class="form-control">
-                                    <?php foreach ($kota as $kota) { ?>
-                                        <option value=" <?php echo $kota['id_kota'] ?> ">
-                                            <?php echo $kota['id_kota'] . ' - ' . $kota['nama_kota']; ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div>
-                                    <input type="submit" name="Submit" value="Submit" class="btn btn-success">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+        <div class="m-5 shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <h1 class="text-center">Edit Data Kustomer</h1>
+            <form id="form_tambah" action="proses_edit_kustomer.php?id_kustomer=<?php echo $id_kustomer ?>" method="post">
+                <div class="form-group mb-3">
+                    <div class="form-label">Nama Kustomer</div>
+                    <input type="text" name="nama_kustomer" data-name="Nama Kustomer" class="required form-control" autocomplete="off" maxlength="50" value="<?php echo $nama_kustomer ?>">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">Password Kustomer</div>
+                    <input type="text" name="password_kustomer" data-name="Password Kustomer" class="required form-control" autocomplete="off" maxlength="12" value="<?php echo $password_kustomer ?>">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">Alamat</div>
+                    <textarea name="alamat" data-name="Alamat" class="required form-control" autocomplete="off" rows="5"><?php echo $alamat ?></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">Email</div>
+                    <input type="text" name="email" data-name="Email" class="required form-control" autocomplete="off" maxlength="50" value="<?php echo $email ?>">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">Telpon</div>
+                    <input type="number" name="telpon" data-name="Telpon" class="required form-control" autocomplete="off" maxlength="13" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" value="<?php echo $telpon ?>">
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-label">ID Kota</div>
+                    <select name="id_kota" class="required form-control">
+                        <?php foreach ($kota as $kota) { ?>
+                            <option value=" <?php echo $kota['id_kota'] ?> " 
+                                <?php if ($kota['id_kota'] == $kustomer_data['id_kota']) echo "selected"; ?>>
+                                <?php echo $kota['id_kota'] . ' - ' . $kota['nama_kota']; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                <a href="kustomer.php" class="btn btn-danger btn-sm"><i class="bi bi-chevron-left"></i>Kembali</a>
+                    <input type="submit" name="Submit" value="Edit Data" class="btn btn-warning btn-sm">
+                </div>
+            </form>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('#form_tambah').submit(function(e) {
+                    e.preventDefault(); // Mencegah pengiriman form
+                    
+                    // Menghapus pesan error yang mungkin ada
+                    $('.error').remove();
+
+                    // Cek setiap input dengan class "required"
+                    $('.required').each(function() {
+                        if ($(this).val() === '') {
+                            // Mendapatkan nama kolom dari atribut data-name
+                            var columnName = $(this).data('name');
+
+                            // Jika input kosong, tambahkan pesan error dan beri warna merah di kolomnya
+                            $(this).after('<div class=" form-text error text-danger" style="font-size: 12px;">' + columnName + ' tidak boleh kosong</div>');
+                            $(this).css('border-color', 'red');
+                        }
+                    });
+
+                    // Jika tidak ada input yang kosong, submit form
+                    if ($('.error').length === 0) {
+                        $(this).unbind('submit').submit();
+                    }
+                });
+
+                // Menghapus pesan error dan warna merah saat input diubah
+                $('.required').keyup(function() {
+                    $(this).next('.error').remove();
+                    $(this).css('border-color', '');
+                });
+            });
+        </script>
 </body>
 </html>

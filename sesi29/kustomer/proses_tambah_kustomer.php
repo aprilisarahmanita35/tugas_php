@@ -9,10 +9,26 @@
 
 	include "connection.php";
 
-	mysqli_query($connection, 
-		"INSERT INTO `kustomer` (`nama_kustomer`, `password_kustomer`, `alamat`, `email`, `telpon`, `id_kota`) 
-		VALUES ('$nama_kustomer', '$password_kustomer', '$alamat', '$email', '$telpon', '$id_kota');");
+	// Menggunakan parameterized query untuk mencegah SQL Injection
+	$kustomer = "INSERT INTO `kustomer` (`nama_kustomer`, `password_kustomer`, `alamat`, `email`, `telpon`, `id_kota`) 
+			VALUES (?, ?, ?, ?, ?, ?)";
+	$stmt = mysqli_prepare($connection, $kustomer);
 
-	header("Location:kustomer.php");
+	if ($stmt) {
+	    mysqli_stmt_bind_param($stmt, 'sssssi', $nama_kustomer, $password_kustomer, $alamat, $email, $telpon, $id_kota);
+	    if (mysqli_stmt_execute($stmt)) {
+	        header("Location:kustomer.php");
+	    } else {
+	        echo "Gagal menambahkan produk: " . mysqli_error($connection);
+	    }
+	    mysqli_stmt_close($stmt);
+	} else {
+	    echo "Error in prepared statement: " . mysqli_error($connection);
+	}
+
+	mysqli_close($connection);
+
 
 ?>
+
+

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2023 at 02:57 PM
+-- Generation Time: Nov 09, 2023 at 04:25 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -45,7 +45,8 @@ INSERT INTO `kategori` (`id_kategori`, `jenis_kategori`, `ukuran`) VALUES
 (5, 'Kue Natal', 'Kecil'),
 (10, 'Kue Modern', 'Besar'),
 (11, 'Kue Tradisional', 'Besar'),
-(12, 'Kue Modern', 'Kecil');
+(12, 'Kue Modern', 'Kecil'),
+(16, 'Kue Tradisional', 'Kecil');
 
 -- --------------------------------------------------------
 
@@ -98,7 +99,8 @@ INSERT INTO `kustomer` (`id_kustomer`, `nama_kustomer`, `password_kustomer`, `al
 (3, 'Haechan', '11121314', 'Jl.Bunga         ', 'haechan@gmail.com', '082738938020', 3),
 (4, 'Jaemin', '1516127', 'Jl.Kenanga                                                  ', 'jaemin@gmail.com', '08362819173', 2),
 (5, 'Renjun', '171819', 'Neocity', 'renjun@gmail.com', '081917345', 5),
-(6, 'Mark', 'markiee', 'Neocity', 'mark@gmail.com', '081737593', 2);
+(6, 'Mark', 'markiee', 'Neocity', 'mark@gmail.com', '081737593', 2),
+(15, 'Jaehyun', 'jaeganteng', 'Neocity', 'jaehyun@gmail.com', '08192739201', 6);
 
 -- --------------------------------------------------------
 
@@ -167,14 +169,16 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_kategori`, `nama_produk`, `harga`, `stok`, `tgl_masuk`) VALUES
-(1, 1, 'Nastar', 40000, 7, '2023-10-03'),
+(1, 3, 'Nastar', 40000, 7, '2023-10-03'),
 (2, 1, 'Kastengel', 50000, 15, '2023-10-01'),
-(3, 1, 'Putri Salju', 20000, 5, '2023-10-03'),
+(3, 3, 'Putri Salju', 20000, 5, '2023-10-03'),
 (4, 2, 'Bika Ambon', 100000, 6, '2023-10-04'),
 (5, 2, 'Pukis', 10000, 10, '2023-10-05'),
 (6, 4, 'Black Forest', 150000, 8, '2023-10-06'),
 (9, 12, 'Chesee Cake', 25000, 10, '2023-11-05'),
-(10, 1, 'Lidah Kucing', 20000, 17, '2023-11-07');
+(10, 1, 'Lidah Kucing', 20000, 17, '2023-11-07'),
+(25, 5, 'Gingerbread Cookies', 45000, 20, '2023-11-09'),
+(26, 16, 'Donat', 15000, 18, '2023-12-21');
 
 --
 -- Indexes for dumped tables
@@ -228,19 +232,19 @@ ALTER TABLE `produk`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `kota`
 --
 ALTER TABLE `kota`
-  MODIFY `id_kota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_kota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `kustomer`
 --
 ALTER TABLE `kustomer`
-  MODIFY `id_kustomer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_kustomer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -252,7 +256,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
@@ -281,7 +285,7 @@ ALTER TABLE `orders_detail`
 -- Constraints for table `produk`
 --
 ALTER TABLE `produk`
-  ADD CONSTRAINT `FK_produk_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FK_produk_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

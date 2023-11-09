@@ -1,4 +1,4 @@
-<?php
+<?php  
 
     $id_produk = $_GET ['id_produk'];
     $id_kategori = $_POST ['id_kategori'];
@@ -9,14 +9,23 @@
 
     include "connection.php";
 
-    mysqli_query($connection, "UPDATE `produk` 
-        SET `id_kategori` = '$id_kategori', 
-        `nama_produk` = '$nama_produk',
-        `harga` = '$harga', 
-        `stok` = '$stok', 
-        `tgl_masuk` = '$tgl_masuk' 
-        WHERE `id_produk` = '$id_produk' ");
+    // Menggunakan parameterized query untuk mencegah SQL Injection
+    $produk = "UPDATE produk SET id_kategori = ?, nama_produk = ?, harga = ?, stok = ?, tgl_masuk = ? WHERE id_produk = ?";
+    $stmt = mysqli_prepare($connection, $produk);
 
-    header("Location:index.php");
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'ssissi', $id_kategori, $nama_produk, $harga, $stok, $tgl_masuk, $id_produk);
+        if (mysqli_stmt_execute($stmt)) {
+            header("Location:index.php");
+        } else {
+            echo "Gagal menambahkan produk: " . mysqli_error($connection);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "Error in prepared statement: " . mysqli_error($connection);
+    }
+
+    mysqli_close($connection);
 
 ?>
+
